@@ -1,0 +1,53 @@
+---
+# 네임스페이스에 injection-istio=enabled 적영되어야함
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  namespace: capstone
+  name: capstone-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  namespace: capstone
+  name: capstone-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - capstone-gateway
+  http:
+  - match:
+    - uri:
+        exact: /preApplies
+    route:
+    - destination:
+        host: preaply
+        port:
+          number: 8080
+  - match:
+    - uri:
+        exact: /customerCenters # app의 endPoint
+    route:
+    - destination:
+        host: center
+        port:
+          number: 8080
+  - match:
+    - uri:
+        exact: /youthAccounts # app의 endPoint
+    route:
+    - destination:
+        host: check-server
+        port:
+          number: 8080
