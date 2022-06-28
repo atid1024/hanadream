@@ -5,6 +5,7 @@ data:
   MYSQL_USER: "root"
   MYSQL_PASSWD: "0gKPzMQFh3"
   EXTERNAL_SERVER: "check-server:8080"
+  ARGOCD_PASSWD: "YYAsqc-8aftfXQqd"
 kind: ConfigMap
 metadata:
   namespace: capstone
